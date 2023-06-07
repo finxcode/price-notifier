@@ -1,0 +1,1 @@
+docker run --network=host --env="RANK=100" --env="BASELINE_ASSET_SYMBOL=BTC" --env="USER=root" --env="PASSWORD=Start2022@" --env="HOST=localhost" --env="PORT=3306" --env="DATABASE=marketData" price-notifier:v2

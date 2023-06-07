@@ -39,7 +39,7 @@ func main() {
 	basicDivergenceAdapter := in.NewBasicDivergenceAdapter(basicDivergenceService)
 
 	cronJob := cron.New()
-	entryID, err := cronJob.AddFunc("15 13 * * *", func() {
+	entryID, err := cronJob.AddFunc("1 15 14 * * *", func() {
 		basicDivergenceAdapter.StoreBasicDivergences()
 	})
 	if err != nil {
@@ -49,5 +49,7 @@ func main() {
 		log.Printf("Divergence job executed on %v with entryId: %v",
 			time.Now(), entryID)
 	}
+
+	cronJob.Start()
 
 }
