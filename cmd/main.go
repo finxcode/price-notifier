@@ -51,5 +51,5 @@ func main() {
 	}
 
 	cronJob.Start()
-
+	select {}
 }
