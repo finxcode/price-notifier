@@ -43,7 +43,7 @@ func main() {
 		basicDivergenceAdapter.StoreBasicDivergences()
 	})
 	if err != nil {
-		log.Printf("Divergence job executed on %v with entryId: %v and with error: %s",
+		log.Printf("Divergence job scheduled on %v with entryId: %v and with error: %s",
 			time.Now(), entryID, err.Error())
 	} else {
 		log.Printf("Divergence job executed on %v with entryId: %v",

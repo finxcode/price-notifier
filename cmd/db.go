@@ -25,7 +25,7 @@ func NewConfig(user, password, host, port, database string) *Config {
 }
 
 func InitDB(c *Config) (*sqlx.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", c.user, c.password, c.host, c.port, c.database)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", c.user, c.password, c.host, c.port, c.database)
 	db, err := sqlx.Open("mysql", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("connect server failed, err:%v\n", err)
