@@ -20,7 +20,7 @@ func (d *DivergenceAdapter) Insert(divergence *entity.BasicDivergence) error {
 	query := "INSERT " +
 		"INTO basic_divergences " +
 		"(coin_id, baseline_id,symbol,divergence24H,divergence7D,divergence_total,trading_day)" +
-		"VALUES ($1,$2,$3,$4,$5,$6) "
+		"VALUES (?,?,?,?,?,?) "
 	res := d.db.MustExec(query, divergence.CoinId, divergence.BaselineCoinId,
 		divergence.Divergence24H, divergence.Divergence7D, divergence.DivergenceTotal, divergence.TradingDay)
 	if _, err := res.RowsAffected(); err != nil {
