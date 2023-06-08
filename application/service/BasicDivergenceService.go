@@ -34,9 +34,6 @@ func (s *SevenDaysPriceDivergenceService) CalcBasicDivergence() []*entity.BasicD
 			log.Printf("an error occurred when calc divergence on coin %s: %s", quote.Symbol, err.Error())
 		}
 		divergences = append(divergences, basicDivergence)
-		if err := s.basicDivergenceRepository.Insert(basicDivergence); err != nil {
-			log.Printf("insert divergence for coin %s falied with error: %s", quote.Symbol, err.Error())
-		}
 	}
 	return divergences
 }
