@@ -28,19 +28,24 @@ func main() {
 	database := os.Getenv("DATABASE")
 	dbConfig := NewConfig(user, password, host, port, database)
 
-	db, err := InitDB(dbConfig)
-	if err != nil {
-		log.Fatalf("database connection error: %s", err.Error())
-	}
-
-	cryptoAssetQuoteAdapter := out.NewCryptoAssetQuoteAdapter(db)
-	divergenceAdapter := out.NewDivergenceAdapter(db)
-	basicDivergenceService := service.NewBasicDivergenceService(c, cryptoAssetQuoteAdapter, divergenceAdapter)
-	basicDivergenceAdapter := in.NewBasicDivergenceAdapter(basicDivergenceService)
-
 	cronJob := cron.New()
 	entryID, err := cronJob.AddFunc("05 12 * * *", func() {
+		db, err := InitDB(dbConfig)
+		if err != nil {
+			log.Fatalf("database connection error: %s", err.Error())
+		}
+		cryptoAssetQuoteAdapter := out.NewCryptoAssetQuoteAdapter(db)
+		divergenceAdapter := out.NewDivergenceAdapter(db)
+		basicDivergenceService := service.NewBasicDivergenceService(c, cryptoAssetQuoteAdapter, divergenceAdapter)
+		basicDivergenceAdapter := in.NewBasicDivergenceAdapter(basicDivergenceService)
 		basicDivergenceAdapter.StoreBasicDivergences()
+
+		defer func() {
+			if db != nil {
+				_ = db.Close()
+			}
+		}()
+
 	})
 	if err != nil {
 		log.Printf("Divergence job scheduled on %v with entryId: %v and with error: %s",
