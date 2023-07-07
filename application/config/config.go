@@ -15,3 +15,7 @@ func NewConfig(rank int, baselineAssetSymbol string, fetchTime time.Time) *Confi
 		FetchTime:           fetchTime,
 	}
 }
+
+func (c *Config) SetFetchTime(fetchTime time.Time) {
+	c.FetchTime = fetchTime
+}

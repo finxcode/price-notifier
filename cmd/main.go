@@ -34,6 +34,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("database connection error: %s", err.Error())
 		}
+		c.SetFetchTime(time.Now())
 		cryptoAssetQuoteAdapter := out.NewCryptoAssetQuoteAdapter(db)
 		divergenceAdapter := out.NewDivergenceAdapter(db)
 		basicDivergenceService := service.NewBasicDivergenceService(c, cryptoAssetQuoteAdapter, divergenceAdapter)
